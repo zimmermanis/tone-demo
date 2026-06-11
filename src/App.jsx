@@ -51,15 +51,15 @@ export default function App() {
             inputs={inputs}
             previewMode={PREVIEW_MODE.MODEL}
             isLoading={false}
-            onPlayDemo={(s) => console.log(‘demo play’, s)}
-            onPlayLive={(s) => console.log(‘live play’, s)}
-            onModelChange={(m) => console.log(‘model ->’, m)}
+            onPlayDemo={(s) => console.log('demo play', s)}
+            onPlayLive={(s) => console.log('live play', s)}
+            onModelChange={(m) => console.log('model ->', m)}
           />
         </T3kPlayerProvider>
 
         <p style={styles.disclaimer}>
-          You’re hearing a <strong>NAM capture</strong> of this amp. The{‘ ‘}
-          <strong>{SALE_PLATFORM}</strong> version you’re buying is captured
+          You're hearing a <strong>NAM capture</strong> of this amp. The{' '}
+          <strong>{SALE_PLATFORM}</strong> version you're buying is captured
           from the same source and sounds very close — minor differences come
           down to how each platform handles cabs and response.
         </p>
@@ -70,51 +70,51 @@ export default function App() {
 
 const styles = {
   page: {
-    minHeight: ‘100vh’,
+    minHeight: '100vh',
     margin: 0,
-    display: ‘flex’,
-    alignItems: ‘center’,
-    justifyContent: ‘center’,
-    background: ‘#141316’,
-    fontFamily: "’Red Hat Display’, system-ui, -apple-system, sans-serif",
-    padding: ‘24px’,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#141316',
+    fontFamily: '"Red Hat Display", system-ui, -apple-system, sans-serif',
+    padding: '24px',
   },
   card: {
-    width: ‘100%’,
+    width: '100%',
     maxWidth: 560,
-    background: ‘#1c1b1f’,
-    border: ‘1px solid rgba(234,89,36,0.2)’,
+    background: '#1c1b1f',
+    border: '1px solid rgba(234,89,36,0.2)',
     borderRadius: 12,
-    padding: ‘32px’,
-    color: ‘#f2f2f2’,
+    padding: '32px',
+    color: '#f2f2f2',
   },
   logo: {
     height: 22,
-    display: ‘block’,
+    display: 'block',
     marginBottom: 20,
   },
   divider: {
     height: 1,
-    background: ‘linear-gradient(90deg, #ea5924 0%, rgba(234,89,36,0.1) 60%, transparent 100%)’,
+    background: 'linear-gradient(90deg, #ea5924 0%, rgba(234,89,36,0.1) 60%, transparent 100%)',
     marginBottom: 20,
   },
   kicker: {
     fontSize: 10,
-    letterSpacing: ‘0.16em’,
-    color: ‘#ea5924’,
-    margin: ‘0 0 8px’,
+    letterSpacing: '0.16em',
+    color: '#ea5924',
+    margin: '0 0 8px',
     fontWeight: 900,
   },
-  h1: { fontSize: 24, margin: ‘0 0 8px’, fontWeight: 900, letterSpacing: ‘-0.01em’ },
-  sub: { fontSize: 14, color: ‘#a09fa5’, margin: ‘0 0 20px’, lineHeight: 1.6, fontWeight: 500 },
+  h1: { fontSize: 24, margin: '0 0 8px', fontWeight: 900, letterSpacing: '-0.01em' },
+  sub: { fontSize: 14, color: '#a09fa5', margin: '0 0 20px', lineHeight: 1.6, fontWeight: 500 },
   disclaimer: {
     fontSize: 12.5,
-    color: ‘#ea5924’,
-    background: ‘rgba(234,89,36,0.07)’,
-    border: ‘1px solid rgba(234,89,36,0.2)’,
+    color: '#ea5924',
+    background: 'rgba(234,89,36,0.07)',
+    border: '1px solid rgba(234,89,36,0.2)',
     borderRadius: 8,
-    padding: ‘12px 14px’,
-    margin: ‘20px 0 0’,
+    padding: '12px 14px',
+    margin: '20px 0 0',
     lineHeight: 1.6,
     fontWeight: 500,
   },
