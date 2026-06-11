@@ -1,9 +1,11 @@
+import { useEffect, useRef } from 'react';
 import {
   T3kPlayer,
   T3kPlayerProvider,
   PREVIEW_MODE,
 } from 'neural-amp-modeler-wasm';
 import 'neural-amp-modeler-wasm/dist/styles.css';
+import './brand-overrides.css';
 
 // ---------------------------------------------------------------------------
 // This stands in for ONE product page. In the real WooCommerce build, the
@@ -31,7 +33,35 @@ const inputs = [
   { name: 'Bass DI', url: '/inputs/bass-di.wav' },
 ];
 
+// The player hardcodes "the TONE3000 website" in its live-tab copy and offers
+// no prop to change it, so we rewrite that text node whenever the player
+// re-renders (e.g. on tab switch).
+function useRebrandPlayerText(ref) {
+  useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+    const rewrite = () => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      for (let node; (node = walker.nextNode()); ) {
+        if (node.nodeValue.includes('TONE3000')) {
+          node.nodeValue = node.nodeValue.replace(
+            'on the TONE3000 website',
+            'right on this page'
+          );
+        }
+      }
+    };
+    rewrite();
+    const observer = new MutationObserver(rewrite);
+    observer.observe(root, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [ref]);
+}
+
 export default function App() {
+  const playerRef = useRef(null);
+  useRebrandPlayerText(playerRef);
+
   return (
     <div style={styles.page}>
       <div style={styles.card}>
@@ -44,18 +74,20 @@ export default function App() {
           through your own interface.
         </p>
 
-        <T3kPlayerProvider>
-          <T3kPlayer
-            models={models}
-            irs={irs}
-            inputs={inputs}
-            previewMode={PREVIEW_MODE.MODEL}
-            isLoading={false}
-            onPlayDemo={(s) => console.log('demo play', s)}
-            onPlayLive={(s) => console.log('live play', s)}
-            onModelChange={(m) => console.log('model ->', m)}
-          />
-        </T3kPlayerProvider>
+        <div ref={playerRef}>
+          <T3kPlayerProvider>
+            <T3kPlayer
+              models={models}
+              irs={irs}
+              inputs={inputs}
+              previewMode={PREVIEW_MODE.MODEL}
+              isLoading={false}
+              onPlayDemo={(s) => console.log('demo play', s)}
+              onPlayLive={(s) => console.log('live play', s)}
+              onModelChange={(m) => console.log('model ->', m)}
+            />
+          </T3kPlayerProvider>
+        </div>
 
         <p style={styles.disclaimer}>
           You're hearing a <strong>NAM capture</strong> of this amp. The{' '}

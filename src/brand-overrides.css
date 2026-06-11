@@ -1,0 +1,45 @@
+/* ------------------------------------------------------------------
+   Amalgam brand overrides for the embedded T3K player.
+   The player ships its own Tailwind-based stylesheet; everything here
+   re-skins it (colors, font, borders) without touching its markup.
+   ------------------------------------------------------------------ */
+
+/* Match the surrounding card: Midnight Black surfaces, orange-tinted borders */
+.neural-amp-modeler {
+  font-family: "Red Hat Display", system-ui, -apple-system, sans-serif !important;
+}
+
+.neural-amp-modeler [class*="bg-zinc-900"] {
+  background-color: #141316 !important;
+}
+
+.neural-amp-modeler [class*="border-zinc-700"] {
+  border-color: rgba(234, 89, 36, 0.25) !important;
+}
+
+/* Secondary text -> brand grey */
+.neural-amp-modeler [class*="text-zinc-400"] {
+  color: #a09fa5 !important;
+}
+
+/* Active tab underline + icons stay white, but accent the selected tab text */
+.neural-amp-modeler [class*="border-b-2"] {
+  border-color: #ea5924 !important;
+}
+
+/* Live/bypass toggle: ON state ships as inline #00D13B — only the checked
+   state carries a style attribute, so this leaves the OFF state grey */
+.neural-amp-modeler div[style*="background-color"] {
+  background-color: #ea5924 !important;
+}
+
+/* Waveform canvas draws a red->yellow->blue gradient internally;
+   filter it into the orange family since the colors are not exposed */
+.neural-amp-modeler canvas {
+  filter: grayscale(1) sepia(1) saturate(4) hue-rotate(-22deg) brightness(1.1);
+}
+
+/* Remove the "Powered by T3K" attribution link */
+.neural-amp-modeler a[href*="tone3000"] {
+  display: none !important;
+}
