@@ -18,7 +18,20 @@ import './brand-overrides.css';
 const SALE_PLATFORM = 'Quad Cortex'; // demo value -> drives the disclaimer text
 
 const models = [
-  { name: 'Vox AC10 (sample)', url: '/models/ac10.nam', default: true },
+  {
+    name: 'Fender Blackface Deluxe Reverb — Clean',
+    url: encodeURI('/models/FNDR BFDRI VB Clean BAL2 CAB.nam'),
+    default: true,
+  },
+  {
+    name: 'Marshall JMP 50 Lead — Crunch',
+    url: encodeURI('/models/MRSH JM50LD I Crunch2 FAT CAB.nam'),
+  },
+  {
+    name: 'Ampeg S-12 — Drive',
+    url: encodeURI('/models/AMPG S12 G Drive BAL TMY CAB.nam'),
+  },
+  { name: 'Vox AC10 (sample)', url: '/models/ac10.nam' },
   { name: 'Fender Deluxe Reverb (sample)', url: '/models/deluxe.nam' },
 ];
 
@@ -29,7 +42,12 @@ const irs = [
 ];
 
 const inputs = [
-  { name: 'Guitar DI', url: '/inputs/guitar-di.wav', default: true },
+  {
+    name: 'Guitar DI (Klickaud)',
+    url: encodeURI('/inputs/DI_Guitar_KLICKAUD.mp3'),
+    default: true,
+  },
+  { name: 'Guitar DI', url: '/inputs/guitar-di.wav' },
   { name: 'Bass DI', url: '/inputs/bass-di.wav' },
 ];
 
