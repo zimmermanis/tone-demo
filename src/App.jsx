@@ -35,7 +35,9 @@ export default function App() {
   return (
     <div style={styles.page}>
       <div style={styles.card}>
-        <p style={styles.kicker}>AMALGAM AUDIO · CAPTURE PLAYER DEMO</p>
+        <img src="/amalgam-logo.svg" alt="Amalgam Audio" style={styles.logo} />
+        <div style={styles.divider} />
+        <p style={styles.kicker}>CAPTURE PLAYER DEMO</p>
         <h1 style={styles.h1}>Fender Blackface Deluxe Reverb</h1>
         <p style={styles.sub}>
           Hit play for the pre-recorded DI demo, or switch to live to play
@@ -49,14 +51,14 @@ export default function App() {
             inputs={inputs}
             previewMode={PREVIEW_MODE.MODEL}
             isLoading={false}
-            onPlayDemo={(s) => console.log('demo play', s)}
-            onPlayLive={(s) => console.log('live play', s)}
-            onModelChange={(m) => console.log('model ->', m)}
+            onPlayDemo={(s) => console.log(‘demo play’, s)}
+            onPlayLive={(s) => console.log(‘live play’, s)}
+            onModelChange={(m) => console.log(‘model ->’, m)}
           />
         </T3kPlayerProvider>
 
         <p style={styles.disclaimer}>
-          You’re hearing a <strong>NAM capture</strong> of this amp. The{' '}
+          You’re hearing a <strong>NAM capture</strong> of this amp. The{‘ ‘}
           <strong>{SALE_PLATFORM}</strong> version you’re buying is captured
           from the same source and sounds very close — minor differences come
           down to how each platform handles cabs and response.
@@ -68,35 +70,52 @@ export default function App() {
 
 const styles = {
   page: {
-    minHeight: '100vh',
+    minHeight: ‘100vh’,
     margin: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: '#0e0e10',
-    fontFamily: 'system-ui, -apple-system, sans-serif',
-    padding: '24px',
+    display: ‘flex’,
+    alignItems: ‘center’,
+    justifyContent: ‘center’,
+    background: ‘#141316’,
+    fontFamily: "’Red Hat Display’, system-ui, -apple-system, sans-serif",
+    padding: ‘24px’,
   },
   card: {
-    width: '100%',
+    width: ‘100%’,
     maxWidth: 560,
-    background: '#17171a',
-    border: '1px solid #2a2a30',
-    borderRadius: 16,
-    padding: '28px',
-    color: '#f2f2f2',
+    background: ‘#1c1b1f’,
+    border: ‘1px solid rgba(234,89,36,0.2)’,
+    borderRadius: 12,
+    padding: ‘32px’,
+    color: ‘#f2f2f2’,
   },
-  kicker: { fontSize: 11, letterSpacing: '0.12em', color: '#8a8a92', margin: '0 0 6px' },
-  h1: { fontSize: 24, margin: '0 0 6px', fontWeight: 700 },
-  sub: { fontSize: 14, color: '#b6b6bd', margin: '0 0 20px', lineHeight: 1.5 },
+  logo: {
+    height: 22,
+    display: ‘block’,
+    marginBottom: 20,
+  },
+  divider: {
+    height: 1,
+    background: ‘linear-gradient(90deg, #ea5924 0%, rgba(234,89,36,0.1) 60%, transparent 100%)’,
+    marginBottom: 20,
+  },
+  kicker: {
+    fontSize: 10,
+    letterSpacing: ‘0.16em’,
+    color: ‘#ea5924’,
+    margin: ‘0 0 8px’,
+    fontWeight: 900,
+  },
+  h1: { fontSize: 24, margin: ‘0 0 8px’, fontWeight: 900, letterSpacing: ‘-0.01em’ },
+  sub: { fontSize: 14, color: ‘#a09fa5’, margin: ‘0 0 20px’, lineHeight: 1.6, fontWeight: 500 },
   disclaimer: {
     fontSize: 12.5,
-    color: '#c9a24b',
-    background: 'rgba(201,162,75,0.08)',
-    border: '1px solid rgba(201,162,75,0.25)',
-    borderRadius: 10,
-    padding: '12px 14px',
-    margin: '20px 0 0',
-    lineHeight: 1.5,
+    color: ‘#ea5924’,
+    background: ‘rgba(234,89,36,0.07)’,
+    border: ‘1px solid rgba(234,89,36,0.2)’,
+    borderRadius: 8,
+    padding: ‘12px 14px’,
+    margin: ‘20px 0 0’,
+    lineHeight: 1.6,
+    fontWeight: 500,
   },
 };
