@@ -7,6 +7,8 @@
 /* Match the surrounding card: Midnight Black surfaces, orange-tinted borders */
 .neural-amp-modeler {
   font-family: "Red Hat Display", system-ui, -apple-system, sans-serif !important;
+  /* the wrapper paints a square black background behind the rounded panel */
+  background-color: transparent !important;
 }
 
 .neural-amp-modeler [class*="bg-zinc-900"] {
@@ -33,10 +35,10 @@
   background-color: #ea5924 !important;
 }
 
-/* Waveform canvas draws a red->yellow->blue gradient internally;
-   filter it into the orange family since the colors are not exposed */
+/* The waveform canvas paints its own background to the element edge, so its
+   square corners poke past the player's rounded border — round and inset it */
 .neural-amp-modeler canvas {
-  filter: grayscale(1) sepia(1) saturate(4) hue-rotate(-22deg) brightness(1.1);
+  border-radius: 12px;
 }
 
 /* Remove the "Powered by T3K" attribution link */
