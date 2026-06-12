@@ -1,0 +1,83 @@
+/* ===========================================================================
+   Amalgam Audio — T3kPlayer brand overrides
+   Scoped under .amalgam-player so nothing leaks outside the widget.
+   The package is built with Tailwind utilities, so we re-skin by overriding
+   those utility classes *within our scope*. Import AFTER the package CSS.
+   ========================================================================= */
+
+.amalgam-player {
+  --am-orange: #ea5924;
+  --am-orange-soft: rgba(234, 89, 36, 0.45);
+  --am-surface: rgba(255, 255, 255, 0.035);
+  --am-hairline: rgba(255, 255, 255, 0.1);
+  --am-text: #f4f2f0;
+  --am-text-dim: rgba(244, 242, 240, 0.6);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* ---- Panels: melt into the frosted card instead of zinc boxes ---------- */
+.amalgam-player .bg-zinc-900 {
+  background: var(--am-surface) !important;
+}
+.amalgam-player .border-zinc-700,
+.amalgam-player .border-zinc-800 {
+  border-color: var(--am-hairline) !important;
+}
+.amalgam-player .rounded-xl {
+  border-radius: 12px !important;
+}
+
+/* ---- Secondary surfaces (dropdown lists, hover fills) ------------------- */
+.amalgam-player .bg-zinc-800 {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+.amalgam-player .hover\:bg-zinc-800:hover {
+  background: rgba(234, 89, 36, 0.16) !important;
+}
+.amalgam-player .bg-zinc-700 {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ---- Accent remap: Tone3000 yellow -> Amalgam Orange -------------------- */
+.amalgam-player .bg-yellow-950 {
+  background: rgba(234, 89, 36, 0.18) !important;
+}
+.amalgam-player .border-yellow-900 {
+  border-color: var(--am-orange) !important;
+}
+.amalgam-player .text-yellow-400 {
+  color: var(--am-orange) !important;
+}
+
+/* ---- Toggles ------------------------------------------------------------ */
+.amalgam-player .bg-zinc-500 {
+  background: rgba(255, 255, 255, 0.18) !important;
+}
+/* checked track inherits accent via the yellow remap above; ball stays white */
+
+/* ---- Text hierarchy ------------------------------------------------------ */
+.amalgam-player .text-white {
+  color: var(--am-text) !important;
+}
+.amalgam-player .text-zinc-400 {
+  color: var(--am-text-dim) !important;
+}
+.amalgam-player .hover\:text-white:hover {
+  color: #ffffff !important;
+}
+
+/* ---- Buttons: orange focus ring + glow on primary actions --------------- */
+.amalgam-player button {
+  transition: box-shadow 150ms ease, background-color 150ms ease,
+    color 150ms ease;
+}
+.amalgam-player button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--am-orange-soft);
+}
+
+/* ---- Mono readouts (time / values) in brand orange ----------------------- */
+.amalgam-player .font-mono {
+  color: var(--am-orange) !important;
+  letter-spacing: 0.02em;
+}

@@ -1,37 +1,24 @@
-import { useEffect, useRef } from 'react';
 import {
   T3kPlayer,
   T3kPlayerProvider,
   PREVIEW_MODE,
 } from 'neural-amp-modeler-wasm';
 import 'neural-amp-modeler-wasm/dist/styles.css';
-import './brand-overrides.css';
+import './amalgam-player.css';
 
 // ---------------------------------------------------------------------------
-// This stands in for ONE product page. In the real WooCommerce build, the
-// arrays below would be populated from product meta (the preview .nam URL,
-// the cab IR for amp-head captures, etc.). Files here are served from /public,
-// so they're same-origin and safe under the cross-origin-isolation headers.
-// Swap in your own .nam files to hear an actual Amalgam capture.
+// Amalgam Audio — capture player, styled to match the new site design.
+// Dark stage + warm orange glow, Amalgam Orange (#ea5924) accents,
+// pill platform selector, hairline dividers, uppercase micro-labels.
+// In production these arrays come from WooCommerce product meta.
 // ---------------------------------------------------------------------------
 
-const SALE_PLATFORM = 'Quad Cortex'; // demo value -> drives the disclaimer text
+const SALE_PLATFORM = 'QC'; // demo value -> drives disclaimer + selected pill
+
+const PLATFORMS = ['TONEX', 'QC', 'NAM', 'KEMPER'];
 
 const models = [
-  {
-    name: 'Fender Blackface Deluxe Reverb — Clean',
-    url: encodeURI('/models/FNDR BFDRI VB Clean BAL2 CAB.nam'),
-    default: true,
-  },
-  {
-    name: 'Marshall JMP 50 Lead — Crunch',
-    url: encodeURI('/models/MRSH JM50LD I Crunch2 FAT CAB.nam'),
-  },
-  {
-    name: 'Ampeg S-12 — Drive',
-    url: encodeURI('/models/AMPG S12 G Drive BAL TMY CAB.nam'),
-  },
-  { name: 'Vox AC10 (sample)', url: '/models/ac10.nam' },
+  { name: 'Vox AC10 (sample)', url: '/models/ac10.nam', default: true },
   { name: 'Fender Deluxe Reverb (sample)', url: '/models/deluxe.nam' },
 ];
 
@@ -42,81 +29,70 @@ const irs = [
 ];
 
 const inputs = [
-  {
-    name: 'Guitar DI (Klickaud)',
-    url: encodeURI('/inputs/DI_Guitar_KLICKAUD.mp3'),
-    default: true,
-  },
-  { name: 'Guitar DI', url: '/inputs/guitar-di.wav' },
+  { name: 'Guitar DI', url: '/inputs/guitar-di.wav', default: true },
   { name: 'Bass DI', url: '/inputs/bass-di.wav' },
 ];
 
-// The player hardcodes "the TONE3000 website" in its live-tab copy and offers
-// no prop to change it, so we rewrite that text node whenever the player
-// re-renders (e.g. on tab switch).
-function useRebrandPlayerText(ref) {
-  useEffect(() => {
-    const root = ref.current;
-    if (!root) return;
-    const rewrite = () => {
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-      for (let node; (node = walker.nextNode()); ) {
-        if (node.nodeValue.includes('TONE3000')) {
-          node.nodeValue = node.nodeValue.replace(
-            'on the TONE3000 website',
-            'right on this page'
-          );
-        }
-      }
-    };
-    rewrite();
-    const observer = new MutationObserver(rewrite);
-    observer.observe(root, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, [ref]);
-}
-
 export default function App() {
-  const playerRef = useRef(null);
-  useRebrandPlayerText(playerRef);
-
   return (
     <div style={styles.page}>
+      {/* warm amp-glow backdrop */}
+      <div style={styles.glow} aria-hidden="true" />
+
       <div style={styles.card}>
-        <img src="/amalgam-logo.svg" alt="Amalgam Audio" style={styles.logo} />
-        <div style={styles.divider} />
-        <p style={styles.kicker}>CAPTURE PLAYER DEMO</p>
-        <h1 style={styles.h1}>Fender Blackface Deluxe Reverb</h1>
+        <div style={styles.badgeRow}>
+          <span style={styles.badge}>TRY IT LIVE</span>
+        </div>
+
+        <h1 style={styles.h1}>STR SIR 30 — CAPTURE PLAYER</h1>
         <p style={styles.sub}>
-          Hit play for the pre-recorded DI demo, or switch to live to play
-          through your own interface.
+          Hit play for the DI demo, or go live and play through your own
+          interface.
         </p>
 
-        <div ref={playerRef}>
-          <T3kPlayerProvider>
-            <T3kPlayer
-              models={models}
-              irs={irs}
-              inputs={inputs}
-              previewMode={PREVIEW_MODE.MODEL}
-              isLoading={false}
-              onPlayDemo={(s) => console.log('demo play', s)}
-              onPlayLive={(s) => console.log('live play', s)}
-              onModelChange={(m) => console.log('model ->', m)}
-            />
-          </T3kPlayerProvider>
+        <div style={styles.divider} />
+
+        <p style={styles.label}>SELECT PLATFORM</p>
+        <div style={styles.pillRow}>
+          {PLATFORMS.map((p) => (
+            <span
+              key={p}
+              style={p === SALE_PLATFORM ? styles.pillActive : styles.pill}
+            >
+              {p}
+            </span>
+          ))}
+        </div>
+
+        <div style={styles.divider} />
+
+        <p style={styles.label}>PREVIEW</p>
+        <div className="amalgam-player">
+        <T3kPlayerProvider>
+          <T3kPlayer
+            models={models}
+            irs={irs}
+            inputs={inputs}
+            previewMode={PREVIEW_MODE.MODEL}
+            isLoading={false}
+          />
+        </T3kPlayerProvider>
         </div>
 
         <p style={styles.disclaimer}>
-          You're hearing a <strong>NAM capture</strong> of this amp. The{' '}
-          <strong>{SALE_PLATFORM}</strong> version you're buying is captured
-          from the same source and sounds very close — minor differences come
-          down to how each platform handles cabs and response.
+          You're hearing a <strong style={styles.strong}>NAM capture</strong>{' '}
+          of this amp. The <strong style={styles.strong}>{SALE_PLATFORM}</strong>{' '}
+          version you're buying is captured from the same source and sounds
+          very close — minor differences come down to how each platform
+          handles cabs and response.
         </p>
       </div>
     </div>
   );
 }
+
+const ORANGE = '#ea5924';
+const BLACK = '#141316';
 
 const styles = {
   page: {
@@ -125,47 +101,101 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: '#141316',
-    fontFamily: '"Red Hat Display", system-ui, -apple-system, sans-serif',
+    background: BLACK,
+    fontFamily:
+      "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif",
     padding: '24px',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  glow: {
+    position: 'absolute',
+    right: '-20%',
+    top: '-10%',
+    width: '70vw',
+    height: '70vw',
+    background:
+      'radial-gradient(circle at center, rgba(234,89,36,0.22) 0%, rgba(234,89,36,0.08) 35%, transparent 70%)',
+    filter: 'blur(40px)',
+    pointerEvents: 'none',
   },
   card: {
+    position: 'relative',
     width: '100%',
-    maxWidth: 560,
-    background: '#1c1b1f',
-    border: '1px solid rgba(234,89,36,0.2)',
-    borderRadius: 12,
+    maxWidth: 580,
+    background: 'rgba(20,19,22,0.72)',
+    backdropFilter: 'blur(18px)',
+    WebkitBackdropFilter: 'blur(18px)',
+    border: '1px solid rgba(255,255,255,0.08)',
+    borderRadius: 18,
     padding: '32px',
-    color: '#f2f2f2',
+    color: '#f4f2f0',
+    boxShadow: '0 24px 80px rgba(0,0,0,0.55)',
   },
-  logo: {
-    height: 22,
-    display: 'block',
-    marginBottom: 20,
+  badgeRow: { marginBottom: 14 },
+  badge: {
+    display: 'inline-block',
+    background: ORANGE,
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: 600,
+    letterSpacing: '0.08em',
+    padding: '6px 12px',
+    borderRadius: 6,
+  },
+  h1: {
+    fontSize: 26,
+    margin: '0 0 8px',
+    fontWeight: 600,
+    letterSpacing: '0.01em',
+  },
+  sub: {
+    fontSize: 14,
+    color: 'rgba(244,242,240,0.65)',
+    margin: 0,
+    lineHeight: 1.55,
   },
   divider: {
     height: 1,
-    background: 'linear-gradient(90deg, #ea5924 0%, rgba(234,89,36,0.1) 60%, transparent 100%)',
-    marginBottom: 20,
+    background: 'rgba(255,255,255,0.09)',
+    margin: '22px 0',
   },
-  kicker: {
-    fontSize: 10,
-    letterSpacing: '0.16em',
-    color: '#ea5924',
-    margin: '0 0 8px',
-    fontWeight: 900,
-  },
-  h1: { fontSize: 24, margin: '0 0 8px', fontWeight: 900, letterSpacing: '-0.01em' },
-  sub: { fontSize: 14, color: '#a09fa5', margin: '0 0 20px', lineHeight: 1.6, fontWeight: 500 },
-  disclaimer: {
-    fontSize: 12.5,
-    color: '#ea5924',
-    background: 'rgba(234,89,36,0.07)',
-    border: '1px solid rgba(234,89,36,0.2)',
-    borderRadius: 8,
-    padding: '12px 14px',
-    margin: '20px 0 0',
-    lineHeight: 1.6,
+  label: {
+    fontSize: 12,
+    letterSpacing: '0.14em',
+    color: 'rgba(244,242,240,0.75)',
+    margin: '0 0 10px',
     fontWeight: 500,
   },
+  pillRow: { display: 'flex', gap: 10, flexWrap: 'wrap' },
+  pill: {
+    padding: '9px 22px',
+    borderRadius: 8,
+    border: '1px solid rgba(255,255,255,0.18)',
+    background: 'rgba(255,255,255,0.04)',
+    color: 'rgba(244,242,240,0.85)',
+    fontSize: 13,
+    fontWeight: 500,
+    letterSpacing: '0.04em',
+  },
+  pillActive: {
+    padding: '9px 22px',
+    borderRadius: 8,
+    border: `1px solid ${ORANGE}`,
+    background: ORANGE,
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: 600,
+    letterSpacing: '0.04em',
+    boxShadow: '0 0 18px rgba(234,89,36,0.45)',
+  },
+  disclaimer: {
+    fontSize: 12.5,
+    color: 'rgba(244,242,240,0.6)',
+    borderTop: '1px solid rgba(255,255,255,0.09)',
+    paddingTop: 16,
+    margin: '22px 0 0',
+    lineHeight: 1.6,
+  },
+  strong: { color: ORANGE, fontWeight: 600 },
 };
